@@ -33,7 +33,7 @@ function AppContent({ cart, setCart }) {
       {!isLogin && !isRegister && <NavBar showCartIcon={true} cart={cart} />}
       
       <Routes>
-        <Route path="/home" element={<SlideShow />} />
+        <Route path="/" element={<SlideShow />} />
         <Route path="/services" element={<Home cart={cart} setCart={setCart} />} />
         <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
         <Route path="/manage" element={<Manage />} />
