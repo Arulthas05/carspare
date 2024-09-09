@@ -34,15 +34,14 @@ function NavBar({ showCartIcon, cart }) {
         <li>
           <a href="#about">About</a>
         </li>
-        
         <li>
-          <Link to={"/services"}>Shop</Link>
+          <Link to={"/manage"}>Manage</Link>
+        </li>
+        <li>
+          <Link to={"/services"}>Services</Link>
         </li>
         <li>
           <a href="#contact">Contact</a>
-        </li>
-        <li>
-          <Link to={"/manage"}>Manage</Link>
         </li>
         {showCartIcon && (
           <li>

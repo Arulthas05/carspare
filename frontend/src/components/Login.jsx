@@ -1,6 +1,101 @@
-import React from 'react';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2"; // Import SweetAlert2
 
 function Login() {
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: ""
+  });
+  const [registerData, setRegisterData] = useState({
+    username: "",
+    email: "",
+    password: ""
+  });
+
+  const usenavigate = useNavigate();
+
+  // Handle input changes for login
+  const handleLoginChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData({ ...loginData, [name]: value });
+  };
+
+  // Handle input changes for registration
+  const handleRegisterChange = (e) => {
+    const { name, value } = e.target;
+    setRegisterData({ ...registerData, [name]: value });
+  };
+
+  // SweetAlert for success
+  const showSuccessAlert = (message) => {
+    Swal.fire({
+      title: "Success!",
+      text: message,
+      icon: "success",
+      confirmButtonText: "OK"
+    });
+  };
+
+  // SweetAlert for error
+  const showErrorAlert = (message) => {
+    Swal.fire({
+      title: "Error!",
+      text: message,
+      icon: "error",
+      confirmButtonText: "OK"
+    });
+  };
+
+  // Submit login form
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(loginData)
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        showSuccessAlert("Login successful!");
+        usenavigate("/");
+      } else {
+        showErrorAlert(result.message || "Login failed");
+      }
+    } catch (err) {
+      console.error(err);
+      showErrorAlert("Error during login");
+    }
+  };
+
+  // Submit registration form
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3000/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(registerData)
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        showSuccessAlert("Registration successful!");
+      } else {
+        showErrorAlert(result.message || "Registration failed");
+      }
+    } catch (err) {
+      console.error(err);
+      showErrorAlert("Error during registration");
+    }
+  };
+
   return (
     <div>
       <style>{`
@@ -111,20 +206,55 @@ function Login() {
         <input type="checkbox" id="chk" aria-hidden="true" />
 
         <div className="signup">
-          <form>
+          <form onSubmit={handleRegisterSubmit}>
             <label htmlFor="chk" aria-hidden="true">Sign up</label>
-            <input type="text" name="txt" placeholder="User name" required />
-            <input type="email" name="email" placeholder="Email" required />
-            <input type="password" name="pswd" placeholder="Password" required />
+            <input
+              type="text"
+              name="username"
+              placeholder="User name"
+              value={registerData.username}
+              onChange={handleRegisterChange}
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={registerData.email}
+              onChange={handleRegisterChange}
+              required
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={registerData.password}
+              onChange={handleRegisterChange}
+              required
+            />
             <button type="submit">Sign up</button>
           </form>
         </div>
 
         <div className="login">
-          <form>
+          <form onSubmit={handleLoginSubmit}>
             <label htmlFor="chk" aria-hidden="true">Login</label>
-            <input type="email" name="email" placeholder="Email" required />
-            <input type="password" name="pswd" placeholder="Password" required />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={loginData.email}
+              onChange={handleLoginChange}
+              required
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={loginData.password}
+              onChange={handleLoginChange}
+              required
+            />
             <button type="submit">Login</button>
           </form>
         </div>
