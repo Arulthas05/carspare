@@ -13,13 +13,16 @@ function NavBar({ showCartIcon, cart }) {
     setIsOpen(!isOpen);
   };
 
-  const handleMouseEnter = () => {
-    setIsDropdownOpen(true); // Show dropdown on hover
+  // const handleMouseEnter = () => {
+  //   setIsDropdownOpen(true); 
+  // };
+  const handleClick = () => {
+    setIsDropdownOpen(!isDropdownOpen); 
   };
 
-  const handleMouseLeave = () => {
-    setIsDropdownOpen(false); // Hide dropdown when hover stops
-  };
+  // const handleMouseLeave = () => {
+  //   setIsDropdownOpen(false); 
+  // };
 
   return (
     <nav className="navbar">
@@ -56,8 +59,9 @@ function NavBar({ showCartIcon, cart }) {
         {/* User Icon with Dropdown */}
         <li
           className="user-icon-wrapper"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          // onMouseEnter={handleMouseEnter}
+          // onMouseLeave={handleMouseLeave}
+          onClick={handleClick}
         >
           <AccountCircleOutlinedIcon className="userIcon" />
           {isDropdownOpen && (
