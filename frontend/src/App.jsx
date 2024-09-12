@@ -10,6 +10,7 @@ import Cart from "./components/Cart";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
+import AdminNavBar from "./components/AdminNavBar";
 
 function App() {
   // Lift the cart state to the App component
@@ -32,7 +33,8 @@ function AppContent({ cart, setCart }) {
   return (
     <>
       {/* Conditionally render NavBar and Footer */}
-      {!isLogin && !isRegister && <NavBar showCartIcon={true} cart={cart} pathname={location.pathname}  />}
+      {!isLogin && !isRegister && !isDashboard && <NavBar showCartIcon={true} cart={cart} pathname={location.pathname}  />}
+      {isDashboard && <AdminNavBar showCartIcon={true} cart={cart} pathname={location.pathname}  />}
       
       <Routes>
         <Route path="/" element={<SlideShow />} />
@@ -44,7 +46,7 @@ function AppContent({ cart, setCart }) {
         <Route path="/register" element={<Register />} />
       </Routes>
 
-      {!isLogin && !isRegister && !isDashboard&&<Footer />}
+      {!isLogin && !isRegister && !isDashboard && <Footer />}
     </>
   );
 }
