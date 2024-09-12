@@ -118,6 +118,21 @@ body {
   width: 100%;
 }
 
+.search-bar {
+  padding: 5px;
+  margin-left: 20px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 200px;
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: #ff6347; /* Highlight border color on focus */
+}
+
+
 .dropdown-menu li a {
   color: #fff;
   text-decoration: none;

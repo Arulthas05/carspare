@@ -53,6 +53,28 @@ router.delete("/carpart/:id", (req, res) => {
 });
 
 
+// Update a car part by ID
+router.put("/carpart/:id", (req, res) => {
+  const { id } = req.params;
+  const { name, brand, model, year, price, stock, image_url } = req.body;
+
+  const query =
+    "UPDATE carparts SET name = ?, brand = ?, model = ?, year = ?, price = ?, stock = ?, image_url = ? WHERE id = ?";
+
+  db.query(
+    query,
+    [name, brand, model, year, price, stock, image_url, id],
+    (err, result) => {
+      if (err) throw err;
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: "Car part not found" });
+      }
+      res.json({ message: "Car part updated successfully" });
+    }
+  );
+});
+
+
 router.post("/vendors", (req, res) => {
   const { name, address, phone, email } = req.body;
   const query =
@@ -95,7 +117,7 @@ router.post('/orders', (req, res) => {
 
 
 router.post("/register", async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password,role } = req.body;
 
   try {
     
@@ -112,10 +134,10 @@ router.post("/register", async (req, res) => {
 
     
       const query =
-        "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        "INSERT INTO users (username, email, password,role) VALUES (?, ?, ?,?)";
       db.query(
         query,
-        [username, email, hashedPassword],
+        [username, email, hashedPassword,role],
         (err, result) => {
           if (err) throw err;
           res.status(201).json({
@@ -159,6 +181,7 @@ router.post("/login", (req, res) => {
           id: user.id,
           username: user.username,
           email: user.email,
+          role:user.role
         },
       });
     });

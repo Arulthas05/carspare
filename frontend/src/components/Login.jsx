@@ -5,12 +5,12 @@ import Swal from "sweetalert2"; // Import SweetAlert2
 function Login() {
   const [loginData, setLoginData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
   const [registerData, setRegisterData] = useState({
     username: "",
     email: "",
-    password: ""
+    password: "",
   });
 
   const usenavigate = useNavigate();
@@ -33,7 +33,7 @@ function Login() {
       title: "Success!",
       text: message,
       icon: "success",
-      confirmButtonText: "OK"
+      confirmButtonText: "OK",
     });
   };
 
@@ -43,7 +43,7 @@ function Login() {
       title: "Error!",
       text: message,
       icon: "error",
-      confirmButtonText: "OK"
+      confirmButtonText: "OK",
     });
   };
 
@@ -54,15 +54,20 @@ function Login() {
       const response = await fetch("http://localhost:3000/api/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(loginData)
+        body: JSON.stringify(loginData),
       });
 
       const result = await response.json();
       if (response.ok) {
+        console.log(result.user.role);
         showSuccessAlert("Login successful!");
-        usenavigate("/");
+        if (result.user.role == "admin") {
+          usenavigate("/dashboard");
+        } else {
+          usenavigate("/");
+        }
       } else {
         showErrorAlert(result.message || "Login failed");
       }
@@ -79,9 +84,9 @@ function Login() {
       const response = await fetch("http://localhost:3000/api/register", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(registerData)
+        body: JSON.stringify(registerData),
       });
 
       const result = await response.json();
@@ -207,7 +212,9 @@ function Login() {
 
         <div className="signup">
           <form onSubmit={handleRegisterSubmit}>
-            <label htmlFor="chk" aria-hidden="true">Sign up</label>
+            <label htmlFor="chk" aria-hidden="true">
+              Sign up
+            </label>
             <input
               type="text"
               name="username"
@@ -232,13 +239,23 @@ function Login() {
               onChange={handleRegisterChange}
               required
             />
+            <input
+              type="text"
+              name="role"
+              placeholder="admin"
+              value={registerData.role}
+              onChange={handleRegisterChange}
+              required
+            />
             <button type="submit">Sign up</button>
           </form>
         </div>
 
         <div className="login">
           <form onSubmit={handleLoginSubmit}>
-            <label htmlFor="chk" aria-hidden="true">Login</label>
+            <label htmlFor="chk" aria-hidden="true">
+              Login
+            </label>
             <input
               type="email"
               name="email"
