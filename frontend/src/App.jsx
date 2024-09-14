@@ -44,9 +44,9 @@ function AppContent({ cart, setCart }) {
         <Route
           path="/"
           element={
-            <ProtectedRoute>
+           
               <SlideShow />
-            </ProtectedRoute>
+         
           }
         />
         <Route
