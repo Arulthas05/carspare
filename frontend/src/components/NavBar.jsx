@@ -47,9 +47,9 @@ function NavBar({ showCartIcon, cart, pathname, username }) {
         <li>
           <a href="#about">About</a>
         </li>
-        <li>
+        {/* <li>
           <Link to={"/manage"}>Manage</Link>
-        </li>
+        </li> */}
         <li>
           <Link to={"/services"}>Services</Link>
         </li>
