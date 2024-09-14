@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+// Login.jsx
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2"; // Import SweetAlert2
+import Swal from "sweetalert2";
+import { AuthContext } from "./AuthContext"; // Ensure correct path
 
 function Login() {
   const [loginData, setLoginData] = useState({
@@ -11,9 +13,11 @@ function Login() {
     username: "",
     email: "",
     password: "",
+    role: "", // Added 'role' to the initial state
   });
 
-  const usenavigate = useNavigate();
+  const { login } = useContext(AuthContext);  // Access the login function
+  const navigate = useNavigate();
 
   // Handle input changes for login
   const handleLoginChange = (e) => {
@@ -61,12 +65,13 @@ function Login() {
 
       const result = await response.json();
       if (response.ok) {
-        console.log(result.user.role);
         showSuccessAlert("Login successful!");
-        if (result.user.role == "admin") {
-          usenavigate("/dashboard");
+        login(result.user.username);  // Pass username from result to login function
+        // Redirect based on role
+        if (result.user.role === "admin") {
+          navigate("/dashboard");
         } else {
-          usenavigate("/");
+          navigate("/manage");
         }
       } else {
         showErrorAlert(result.message || "Login failed");
@@ -104,6 +109,7 @@ function Login() {
   return (
     <div>
       <style>{`
+        /* Your existing styles */
         body {
           margin: 0;
           padding: 0;
@@ -242,7 +248,7 @@ function Login() {
             <input
               type="text"
               name="role"
-              placeholder="admin"
+              placeholder="Role (e.g., admin)"
               value={registerData.role}
               onChange={handleRegisterChange}
               required

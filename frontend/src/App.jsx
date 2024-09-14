@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useContext } from "react"; // Import useContext here
 import "./App.css";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import NavBar from "./components/NavBar";
@@ -10,41 +10,84 @@ import Cart from "./components/Cart";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider, AuthContext } from "./components/AuthContext"; // Ensure correct path and import AuthContext
+import Logout from "./components/Logout";
 
 function App() {
   // Lift the cart state to the App component
   const [cart, setCart] = useState([]);
 
-  // Move BrowserRouter outside to ensure location is available inside
+  // Wrap BrowserRouter with AuthProvider
   return (
-    <BrowserRouter>
-      <AppContent cart={cart} setCart={setCart} />
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <AppContent cart={cart} setCart={setCart} />
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
 function AppContent({ cart, setCart }) {
   const location = useLocation();
+  const { username } = useContext(AuthContext); // Now useContext is correctly defined
   const isLogin = location.pathname === "/login";
   const isRegister = location.pathname === "/register";
   const isDashboard = location.pathname === "/dashboard";
 
   return (
     <>
-      {/* Conditionally render NavBar and Footer */}
-      {!isLogin && !isRegister && <NavBar showCartIcon={true} cart={cart} pathname={location.pathname}  />}
+      {/* Conditionally render NavBar */}
+      {!isLogin && !isRegister && <NavBar showCartIcon={true} cart={cart} pathname={location.pathname} username={username} />}
       
       <Routes>
-        <Route path="/" element={<SlideShow />} />
-        <Route path="/services" element={<Home cart={cart} setCart={setCart} />} />
-        <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
-        <Route path="/manage" element={<Manage />} />
-        <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <SlideShow />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/services"
+          element={
+            <ProtectedRoute>
+              <Home cart={cart} setCart={setCart} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute>
+              <Cart cart={cart} setCart={setCart} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/manage"
+          element={
+            <ProtectedRoute>
+              <Manage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/logout" element={<Logout/>} />
       </Routes>
 
-      {!isLogin && !isRegister && !isDashboard&&<Footer />}
+      {/* Conditionally render Footer */}
+      {!isLogin && !isRegister && !isDashboard && <Footer />}
     </>
   );
 }

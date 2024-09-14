@@ -4,7 +4,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
 
-function NavBar({ showCartIcon, cart ,pathname}) {
+function NavBar({ showCartIcon, cart ,pathname,username}) {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State for dropdown
   const [searchQuery, setSearchQuery] = useState(""); // State for search bar input
@@ -76,6 +76,7 @@ function NavBar({ showCartIcon, cart ,pathname}) {
           onClick={handleClick}
         >
           <AccountCircleOutlinedIcon className="userIcon" />
+          {username && <span className="username">{username}</span>} {/* Display username */}
           {isDropdownOpen && (
             <ul className="dropdown-menu">
               <li>
