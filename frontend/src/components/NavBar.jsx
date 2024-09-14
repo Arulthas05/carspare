@@ -4,7 +4,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
 
-function NavBar({ showCartIcon, cart ,pathname,username}) {
+function NavBar({ showCartIcon, cart, pathname, username }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State for dropdown
   const [searchQuery, setSearchQuery] = useState(""); // State for search bar input
@@ -56,7 +56,7 @@ function NavBar({ showCartIcon, cart ,pathname,username}) {
         <li>
           <a href="#contact">Contact</a>
         </li>
-        {pathname === "/services"  && (
+        {pathname === "/services" && (
           <li>
             <Link to={"/cart"}>
               <div className="cart-icon-wrapper">
@@ -76,15 +76,20 @@ function NavBar({ showCartIcon, cart ,pathname,username}) {
           onClick={handleClick}
         >
           <AccountCircleOutlinedIcon className="userIcon" />
-          {username && <span className="username">{username}</span>} {/* Display username */}
+          {username && <span className="username">{username}</span>}{" "}
+          {/* Display username */}
           {isDropdownOpen && (
             <ul className="dropdown-menu">
-              <li>
-                <Link to={"/login"}>Login/Signup</Link>
-              </li>
-              <li>
-                <Link to={"/logout"}>Logout</Link>
-              </li>
+              {!username && (
+                <li>
+                  <Link to={"/login"}>Login/Signup</Link>
+                </li>
+              )}
+              {username && (
+                <li>
+                  <Link to={"/logout"}>Logout</Link>
+                </li>
+              )}
             </ul>
           )}
         </li>
