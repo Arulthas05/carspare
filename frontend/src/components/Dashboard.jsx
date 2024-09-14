@@ -70,18 +70,11 @@ function Dashboard() {
           <li>
             <Link to={"/"}>Home</Link>
           </li>
+          
           <li>
-            <Link to={"/"}>About</Link>
+            <Link to={"/manage"}>Create Product</Link>
           </li>
-          <li>
-            <Link to={"/manage"}>Manage</Link>
-          </li>
-          <li>
-            <Link to={"/services"}>Services</Link>
-          </li>
-          <li>
-            <Link to={"/"}>Contact</Link>
-          </li>
+          
         </ul>
       </aside>
       <div className="main-content">

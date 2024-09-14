@@ -10,9 +10,6 @@ import Cart from "./components/Cart";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
-import { AuthProvider, AuthContext } from "./components/AuthContext"; // Ensure correct path and import AuthContext
-import Logout from "./components/Logout";
 
 function App() {
   // Lift the cart state to the App component
@@ -37,8 +34,8 @@ function AppContent({ cart, setCart }) {
 
   return (
     <>
-      {/* Conditionally render NavBar */}
-      {!isLogin && !isRegister && <NavBar showCartIcon={true} cart={cart} pathname={location.pathname} username={username} />}
+      {/* Conditionally render NavBar and Footer */}
+      {!isLogin && !isRegister && <NavBar showCartIcon={true} cart={cart} pathname={location.pathname}  />}
       
       <Routes>
         <Route
@@ -86,8 +83,7 @@ function AppContent({ cart, setCart }) {
         <Route path="/logout" element={<Logout/>} />
       </Routes>
 
-      {/* Conditionally render Footer */}
-      {!isLogin && !isRegister && !isDashboard && <Footer />}
+      {!isLogin && !isRegister && !isDashboard&&<Footer />}
     </>
   );
 }
