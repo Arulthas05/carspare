@@ -13,7 +13,6 @@ function Login() {
     username: "",
     email: "",
     password: "",
-    role: "", // Added 'role' to the initial state
   });
 
   const { login } = useContext(AuthContext);  // Access the login function
@@ -68,7 +67,7 @@ function Login() {
         showSuccessAlert("Login successful!");
         login(result.user.username);  // Pass username from result to login function
         // Redirect based on role
-        if (result.user.role === "admin") {
+        if (result.user.email === "admin123@gmail.com") {
           navigate("/dashboard");
         } else {
           navigate("/manage");
@@ -242,14 +241,6 @@ function Login() {
               name="password"
               placeholder="Password"
               value={registerData.password}
-              onChange={handleRegisterChange}
-              required
-            />
-            <input
-              type="text"
-              name="role"
-              placeholder="Role (e.g., admin)"
-              value={registerData.role}
               onChange={handleRegisterChange}
               required
             />

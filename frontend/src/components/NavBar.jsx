@@ -4,7 +4,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
 
-function NavBar({ showCartIcon, cart, pathname, username }) {
+function NavBar({ isAdmin, showCartIcon, cart, pathname, username }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State for dropdown
   const [searchQuery, setSearchQuery] = useState(""); // State for search bar input
@@ -44,18 +44,16 @@ function NavBar({ showCartIcon, cart, pathname, username }) {
         <li>
           <Link to={"/"}>Home</Link>
         </li>
-        <li>
-          <a href="#about">About</a>
-        </li>
+         {/* Conditionally hide the "Services" link if the user is admin */}
+         {!isAdmin && (
+          <li>
+            <Link to={"/services"}>Services</Link>
+          </li>
+        )}
         {/* <li>
           <Link to={"/manage"}>Manage</Link>
         </li> */}
-        <li>
-          <Link to={"/services"}>Services</Link>
-        </li>
-        <li>
-          <a href="#contact">Contact</a>
-        </li>
+
         {pathname === "/services" && (
           <li>
             <Link to={"/cart"}>

@@ -66,7 +66,7 @@ function Dashboard() {
     <div className="dashboard">
       <aside className="sidebar">
         <h2>Dashboard</h2>
-        <ul>
+        {/* <ul>
           <li>
             <Link to={"/"}>Home</Link>
           </li>
@@ -75,13 +75,18 @@ function Dashboard() {
             <Link to={"/manage"}>Create Product</Link>
           </li>
           
-        </ul>
+        </ul> */}
       </aside>
       <div className="main-content">
         <header className="header">
           <h1>Welcome to Your Dashboard</h1>
+          
         </header>
         <div className="content">
+          {/* Add Product button */}
+          <button className="add-product-btn" onClick={() => navigate("/manage")}>
+            Add Product
+          </button>
           <table className="car-parts-table">
             <thead>
               <tr>

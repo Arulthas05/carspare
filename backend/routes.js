@@ -117,7 +117,7 @@ router.post('/orders', (req, res) => {
 
 
 router.post("/register", async (req, res) => {
-  const { username, email, password,role } = req.body;
+  const { username, email, password } = req.body;
 
   try {
     
@@ -134,10 +134,10 @@ router.post("/register", async (req, res) => {
 
     
       const query =
-        "INSERT INTO users (username, email, password,role) VALUES (?, ?, ?,?)";
+        "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
       db.query(
         query,
-        [username, email, hashedPassword,role],
+        [username, email, hashedPassword],
         (err, result) => {
           if (err) throw err;
           res.status(201).json({
@@ -180,8 +180,7 @@ router.post("/login", (req, res) => {
         user: {
           id: user.id,
           username: user.username,
-          email: user.email,
-          role:user.role
+          email: user.email
         },
       });
     });

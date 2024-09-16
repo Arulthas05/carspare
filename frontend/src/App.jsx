@@ -35,10 +35,15 @@ function AppContent({ cart, setCart }) {
   const isRegister = location.pathname === "/register";
   const isDashboard = location.pathname === "/dashboard";
 
+  const { user } = useContext(AuthContext); // Get the logged-in user info
+
+  // Check if the user is an admin
+  const isAdmin = user && user.email === "admin123@gmail.com";
+
   return (
     <>
       {/* Conditionally render NavBar */}
-      {!isLogin && !isRegister && <NavBar showCartIcon={true} cart={cart} pathname={location.pathname} username={username} />}
+      {!isLogin && !isRegister && <NavBar  isAdmin={isAdmin} showCartIcon={true} cart={cart} pathname={location.pathname} username={username} />}
       
       <Routes>
         <Route
