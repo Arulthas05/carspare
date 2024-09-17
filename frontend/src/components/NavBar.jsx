@@ -30,7 +30,7 @@ function NavBar({ isAdmin, showCartIcon, cart, pathname, username }) {
     <nav className="navbar">
       <div className="navbar-brand">CarSpare</div>
       {/* Conditionally render the search bar only on /services route */}
-      {pathname === "/services" && (
+      {pathname === "/services"&&(
         <input
           type="text"
           className="search-bar"
@@ -54,7 +54,7 @@ function NavBar({ isAdmin, showCartIcon, cart, pathname, username }) {
           <Link to={"/manage"}>Manage</Link>
         </li> */}
 
-        {pathname === "/services" && (
+        {(pathname === "/services"||pathname === "/")&& (
           <li>
             <Link to={"/cart"}>
               <div className="cart-icon-wrapper">

@@ -50,7 +50,7 @@ function AppContent({ cart, setCart }) {
           path="/"
           element={
            
-              <SlideShow />
+              <SlideShow cart={cart} setCart={setCart} />
          
           }
         />
