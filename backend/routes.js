@@ -52,6 +52,26 @@ router.delete("/carpart/:id", (req, res) => {
   });
 });
 
+// Search car parts by name, brand, or model
+router.get("/search", (req, res) => {
+  const { query } = req.query;
+
+  const sqlQuery = `
+    SELECT * FROM carparts 
+    WHERE name LIKE ? OR brand LIKE ? OR model LIKE ?
+  `;
+  
+  const searchValue = `%${query}%`;
+
+  db.query(sqlQuery, [searchValue, searchValue, searchValue], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: "Error searching for car parts" });
+    }
+    res.json(results);
+  });
+});
+
+
 
 // Update a car part by ID
 router.put("/carpart/:id", (req, res) => {

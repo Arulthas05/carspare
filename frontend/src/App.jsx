@@ -57,9 +57,9 @@ function AppContent({ cart, setCart }) {
         <Route
           path="/services"
           element={
-            <ProtectedRoute>
+          
               <Home cart={cart} setCart={setCart} />
-            </ProtectedRoute>
+         
           }
         />
         <Route
