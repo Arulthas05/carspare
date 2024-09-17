@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2"; // Import SweetAlert
 
 function Dashboard() {
   const [carParts, setCarParts] = useState([]);
+  const [formData, setFormData] = useState({
+    name: "",
+    brand: "",
+    model: "",
+    year: "",
+    price: "",
+    stock: "",
+    image_url: "",
+  });
+  const [isEditing, setIsEditing] = useState(false); // For switching between add and edit
   const navigate = useNavigate();
 
   // Fetch car parts data from the backend
@@ -20,9 +30,18 @@ function Dashboard() {
       });
   }, []);
 
+  // Handle form data change
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
   // Handle edit button click
   const handleEdit = (part) => {
-    // Show SweetAlert confirmation before navigating to edit
+    // Show SweetAlert confirmation before editing
     Swal.fire({
       title: "Are you sure?",
       text: "Do you want to edit this car part?",
@@ -32,7 +51,8 @@ function Dashboard() {
       cancelButtonText: "No, cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        navigate("/manage", { state: { carPart: part } });
+        setFormData(part); // Populate the form with existing data
+        setIsEditing(true); // Set editing mode
       }
     });
   };
@@ -62,31 +82,43 @@ function Dashboard() {
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (isEditing) {
+      try {
+        const response = await axios.put(
+          `http://localhost:3000/api/carpart/${formData.id}`,
+          formData
+        );
+        Swal.fire("Updated!", "The car part has been updated.", "success");
+        window.location.reload(); // Refresh the page after editing
+      } catch (error) {
+        console.error("There was an error updating the car part!", error);
+      }
+    } else {
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/api/carparts",
+          formData
+        );
+        Swal.fire("Added!", "The car part has been added.", "success");
+        window.location.reload(); // Refresh the page after adding
+      } catch (error) {
+        console.error("There was an error submitting the data!", error);
+      }
+    }
+  };
+
   return (
     <div className="dashboard">
       <aside className="sidebar">
-        <h2>Dashboard</h2>
-        {/* <ul>
-          <li>
-            <Link to={"/"}>Home</Link>
-          </li>
-          
-          <li>
-            <Link to={"/manage"}>Create Product</Link>
-          </li>
-          
-        </ul> */}
+        {/* <h2>Dashboard</h2> */}
       </aside>
       <div className="main-content">
         <header className="header">
           <h1>Welcome to Your Dashboard</h1>
-          
         </header>
         <div className="content">
-          {/* Add Product button */}
-          <button className="add-product-btn" onClick={() => navigate("/manage")}>
-            Add Product
-          </button>
           <table className="car-parts-table">
             <thead>
               <tr>
@@ -132,6 +164,66 @@ function Dashboard() {
               ))}
             </tbody>
           </table>
+
+          {/* Add/Edit Form below the table */}
+          <form className="car-part-form" onSubmit={handleSubmit}>
+            <h2>{isEditing ? "Edit Car Part" : "Add Car Part"}</h2>
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="brand"
+              placeholder="Brand"
+              value={formData.brand}
+              onChange={handleChange}
+            />
+            <input
+              type="text"
+              name="model"
+              placeholder="Model"
+              value={formData.model}
+              onChange={handleChange}
+            />
+            <input
+              type="number"
+              name="year"
+              placeholder="Year"
+              value={formData.year}
+              onChange={handleChange}
+            />
+            <input
+              type="number"
+              name="price"
+              placeholder="Price"
+              value={formData.price}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="number"
+              name="stock"
+              placeholder="Stock"
+              value={formData.stock}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="image_url"
+              placeholder="Image URL"
+              value={formData.image_url}
+              onChange={handleChange}
+            />
+            <button type="submit">
+              {isEditing ? "Update Car Part" : "Add Car Part"}
+            </button>
+          </form>
         </div>
       </div>
     </div>

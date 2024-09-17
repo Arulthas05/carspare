@@ -70,7 +70,7 @@ function Login() {
         if (result.user.email === "admin123@gmail.com") {
           navigate("/dashboard");
         } else {
-          navigate("/manage");
+          navigate("/services");
         }
       } else {
         showErrorAlert(result.message || "Login failed");
