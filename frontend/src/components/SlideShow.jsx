@@ -26,8 +26,31 @@ const fetchCarParts = async () => {
     return data;
 };
 
+// Sample reviews
+const sampleReviews = [
+    {
+        user_name: 'Alice Johnson',
+        user_image_url: 'https://randomuser.me/api/portraits/women/44.jpg',
+        text: 'Great product! Really satisfied with the quality and delivery.',
+        rating: 5
+    },
+    {
+        user_name: 'Bob Smith',
+        user_image_url: 'https://randomuser.me/api/portraits/men/45.jpg',
+        text: 'The product was okay, but I expected better durability.',
+        rating: 3
+    },
+    {
+        user_name: 'Carla Davis',
+        user_image_url: 'https://randomuser.me/api/portraits/women/46.jpg',
+        text: 'Excellent customer service. The item arrived on time and in perfect condition.',
+        rating: 4
+    }
+];
+
 function SlideShow() {
     const [carParts, setCarParts] = useState([]);
+    const [reviews, setReviews] = useState(sampleReviews);
 
     useEffect(() => {
         const loadCarParts = async () => {
@@ -48,10 +71,9 @@ function SlideShow() {
                     ))}
                 </Fade>
             </div>
-            
 
             <div className="product-list">
-             <div className='text'>latest products</div> 
+                <div className='text'>Latest Products</div> 
                 {carParts.map((part, index) => (
                     <div key={index} className="product-card">
                         <img src={part.image_url} alt={part.name} className="product-image" />
@@ -62,6 +84,27 @@ function SlideShow() {
                 ))}
             </div>
 
+            <div className="review-section">
+                <h2>Customer Reviews</h2>
+                <div className="review-list">
+                    {reviews.map((review, index) => (
+                        <div key={index} className="review-card">
+                            <div className="review-user">
+                                <img src={review.user_image_url} alt={review.user_name} className="review-user-image" />
+                                <p className="review-user-name">{review.user_name}</p>
+                            </div>
+                            <div className="review-content">
+                                <p>{review.text}</p>
+                                <div className="review-rating">
+                                    {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+           
         </>
     );
 }
