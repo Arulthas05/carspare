@@ -4,7 +4,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
 
-function AdminNavBar({ showCartIcon, cart ,pathname}) {
+function AdminNavBar({ showCartIcon, cart ,pathname,username}) {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State for dropdown
   const [searchQuery, setSearchQuery] = useState(""); // State for search bar input
@@ -33,21 +33,27 @@ function AdminNavBar({ showCartIcon, cart ,pathname}) {
       
       <ul className={`navbar-links ${isOpen ? "open" : ""}`}>
        
-        <li
+      <li
           className="user-icon-wrapper"
           // onMouseEnter={handleMouseEnter}
           // onMouseLeave={handleMouseLeave}
           onClick={handleClick}
         >
           <AccountCircleOutlinedIcon className="userIcon" />
+          {username && <span className="username">{username}</span>}{" "}
+          {/* Display username */}
           {isDropdownOpen && (
             <ul className="dropdown-menu">
-              <li>
-                <Link to={"/login"}>Login/Signup</Link>
-              </li>
-              <li>
-                <Link to={"/logout"}>Logout</Link>
-              </li>
+              {!username && (
+                <li>
+                  <Link to={"/login"}>Login/Signup</Link>
+                </li>
+              )}
+              {username && (
+                <li>
+                  <Link to={"/logout"}>Logout</Link>
+                </li>
+              )}
             </ul>
           )}
         </li>
