@@ -20,6 +20,33 @@
   margin-bottom: 20px;
 }
 
+/* Sidebar list item styles */
+.sidebar nav ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+.sidebar nav li {
+  margin-bottom: 15px; /* Add space between items */
+}
+
+.sidebar nav li a {
+  display: block; /* Make the whole link clickable */
+  padding: 10px 15px; /* Padding inside the links */
+  color: #ecf0f1; /* Text color */
+  text-decoration: none; /* Remove underline from links */
+  font-size: 16px; /* Adjust font size */
+  border-radius: 4px; /* Slight rounding of corners */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.sidebar nav li a:hover {
+  background-color: #34495e; /* Change background color on hover */
+  color: #ffffff; /* Optional: change text color on hover */
+}
+
+
 .main-content {
   margin-left: 250px;
   padding: 20px;

@@ -14,6 +14,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider, AuthContext } from "./components/AuthContext"; // Ensure correct path and import AuthContext
 import Logout from "./components/Logout";
 import Blog from "./components/Blog";
+import AdminNavBar from "./components/AdminNavBar";
 
 function App() {
   // Lift the cart state to the App component
@@ -46,7 +47,8 @@ function AppContent({ cart, setCart }) {
   return (
     <>
       {/* Conditionally render NavBar */}
-      {!isLogin && !isRegister && <NavBar  isAdmin={isAdmin} showCartIcon={true} cart={cart} pathname={location.pathname} username={username} />}
+      {!isLogin && !isRegister && !isDashboard && <NavBar  isAdmin={isAdmin} showCartIcon={true} cart={cart} pathname={location.pathname} username={username} />}
+      {isDashboard && <AdminNavBar  isAdmin={isAdmin} showCartIcon={true} cart={cart} pathname={location.pathname} username={username} />}
       
       <Routes>
         <Route

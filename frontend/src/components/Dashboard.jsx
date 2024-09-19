@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2"; // Import SweetAlert
 import "./Dashboard.css";
+import { Link } from 'react-router-dom';
 
 function Dashboard() {
   const [carParts, setCarParts] = useState([]);
@@ -184,8 +185,18 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
-      <aside className="sidebar">
+      <aside className="sidebar" >
         {/* Sidebar content */}
+        <nav>
+    <ul>
+      <li>
+        <Link to="/blogs">Add Product</Link>
+      </li>
+      <li>
+        <Link to="/blogs">Blogs</Link>
+      </li>
+    </ul>
+  </nav>
       </aside>
       <div className="main-content">
         <header className="header">
@@ -381,6 +392,7 @@ function Dashboard() {
               {isReviewEditing ? "Update Review" : "Add Review"}
             </button>
           </form>
+          
         </div>
       </div>
     </div>
