@@ -209,4 +209,66 @@ router.post("/login", (req, res) => {
   }
 });
 
+
+// Add a new review
+router.post("/reviews", (req, res) => {
+  const { user_id, username, car_part_id, rating, review_text } = req.body;
+  const query =
+    "INSERT INTO reviews (user_id, username, car_part_id, rating, review_text) VALUES (?, ?, ?, ?, ?)";
+
+  db.query(query, [user_id, username, car_part_id, rating, review_text], (err, result) => {
+    if (err) throw err;
+    res.json({
+      message: "Review added successfully",
+      reviewId: result.insertId,
+    });
+  });
+});
+
+// Get all reviews
+router.get("/reviews", (req, res) => {
+  const query = "SELECT * FROM reviews";
+  db.query(query, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+// Get reviews for a specific car part
+router.get("/reviews/carpart/:car_part_id", (req, res) => {
+  const { car_part_id } = req.params;
+  const query = "SELECT * FROM reviews WHERE car_part_id = ?";
+
+  db.query(query, [car_part_id], (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+// Update a review
+router.put("/review/:id", (req, res) => {
+  const { id } = req.params;
+  const { rating, review_text } = req.body;
+  const query = "UPDATE reviews SET rating = ?, review_text = ? WHERE id = ?";
+
+  db.query(query, [rating, review_text, id], (err, result) => {
+    if (err) throw err;
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Review not found" });
+    }
+    res.json({ message: "Review updated successfully" });
+  });
+});
+
+// Delete a review
+router.delete("/review/:id", (req, res) => {
+  const { id } = req.params;
+  const query = "DELETE FROM reviews WHERE id = ?";
+
+  db.query(query, [id], (err) => {
+    if (err) throw err;
+    res.json({ message: "Review deleted successfully" });
+  });
+});
+
 module.exports = router;

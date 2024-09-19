@@ -65,7 +65,7 @@ function Login() {
       const result = await response.json();
       if (response.ok) {
         showSuccessAlert("Login successful!");
-        login(result.user.username);  // Pass username from result to login function
+        login(result.user.username,result.user.id);  // Pass username from result to login function
         // Redirect based on role
         if (result.user.email === "admin123@gmail.com") {
           navigate("/dashboard");

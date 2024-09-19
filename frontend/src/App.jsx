@@ -13,6 +13,7 @@ import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider, AuthContext } from "./components/AuthContext"; // Ensure correct path and import AuthContext
 import Logout from "./components/Logout";
+import Blog from "./components/Blog";
 
 function App() {
   // Lift the cart state to the App component
@@ -30,12 +31,14 @@ function App() {
 
 function AppContent({ cart, setCart }) {
   const location = useLocation();
-  const { username } = useContext(AuthContext); // Now useContext is correctly defined
+  //const { username } = useContext(AuthContext); // Now useContext is correctly defined
   const isLogin = location.pathname === "/login";
   const isRegister = location.pathname === "/register";
   const isDashboard = location.pathname === "/dashboard";
 
-  const { user } = useContext(AuthContext); // Get the logged-in user info
+ // const { user } = useContext(AuthContext); // Get the logged-in user info
+
+  const{user,username,userId}=useContext(AuthContext)
 
   // Check if the user is an admin
   const isAdmin = user && user.email === "admin123@gmail.com";
@@ -50,7 +53,7 @@ function AppContent({ cart, setCart }) {
           path="/"
           element={
            
-              <SlideShow cart={cart} setCart={setCart} />
+              <SlideShow cart={cart} setCart={setCart} username={username} userId={userId} />
          
           }
         />
@@ -58,7 +61,7 @@ function AppContent({ cart, setCart }) {
           path="/services"
           element={
            
-              <Home cart={cart} setCart={setCart} />
+              <Home cart={cart} setCart={setCart} username={username} userId={userId} />
        
           }
         />
@@ -69,12 +72,21 @@ function AppContent({ cart, setCart }) {
               <Cart cart={cart} setCart={setCart} />
             </ProtectedRoute>
           }
+          
         />
         <Route
           path="/manage"
           element={
           
               <Manage />
+      
+          }
+        />
+         <Route
+          path="/blogs"
+          element={
+          
+              <Blog />
       
           }
         />

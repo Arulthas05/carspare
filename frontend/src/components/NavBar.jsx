@@ -53,7 +53,9 @@ function NavBar({ isAdmin, showCartIcon, cart, pathname, username }) {
         {/* <li>
           <Link to={"/manage"}>Manage</Link>
         </li> */}
-
+  <li>
+            <Link to={"/blogs"}>Blogs</Link>
+          </li>
         {(pathname === "/services"||pathname === "/")&& (
           <li>
             <Link to={"/cart"}>

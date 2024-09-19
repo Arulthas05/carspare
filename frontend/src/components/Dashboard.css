@@ -38,7 +38,9 @@
   margin-top: 20px;
 }
 
-.car-parts-table {
+/* Car Parts Table Styling */
+.car-parts-table, 
+.reviews-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
@@ -48,19 +50,23 @@
 }
 
 .car-parts-table th, 
-.car-parts-table td {
+.car-parts-table td,
+.reviews-table th, 
+.reviews-table td {
   padding: 12px 15px;
   border: 1px solid #ddd;
   text-align: left;
 }
 
-.car-parts-table th {
+.car-parts-table th,
+.reviews-table th {
   background-color: #f4f4f4;
   font-weight: bold;
   color: #333;
 }
 
-.car-parts-table tbody tr:hover {
+.car-parts-table tbody tr:hover,
+.reviews-table tbody tr:hover {
   background-color: #f1f1f1;
 }
 
@@ -70,6 +76,7 @@
   border-radius: 3px;
 }
 
+/* Button Styling */
 .edit-btn, 
 .delete-btn {
   padding: 8px 15px;
@@ -99,7 +106,8 @@
 }
 
 /* Form Styling */
-.car-part-form {
+.car-part-form
+ {
   width: 100%;
   max-width: 600px;
   background-color: #fff;
@@ -111,15 +119,32 @@
   flex-direction: column;
   gap: 15px;
 }
+.review-form{
+  width: 100%;
+  max-width: 600px;
+  background-color: #fff;
+  padding: 20px;
+  margin-top: 20px;
+  margin-left: 300px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
 
-.car-part-form h2 {
+.car-part-form h2,
+.review-form h2 {
   font-size: 1.5em;
   margin-bottom: 20px;
   color: #333;
 }
 
 .car-part-form input, 
-.car-part-form select {
+.car-part-form select,
+.review-form input, 
+.review-form select,
+.review-form textarea {
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
@@ -127,7 +152,12 @@
   width: 100%;
 }
 
-.car-part-form button {
+.review-form textarea {
+  resize: vertical; /* Allow vertical resizing only */
+}
+
+.car-part-form button,
+.review-form button {
   padding: 12px;
   font-size: 16px;
   background-color: #3498db;
@@ -138,7 +168,8 @@
   transition: background-color 0.3s ease;
 }
 
-.car-part-form button:hover {
+.car-part-form button:hover,
+.review-form button:hover {
   background-color: #2980b9;
 }
 
@@ -149,17 +180,21 @@
     padding: 10px;
   }
 
-  .car-part-form {
+  .car-part-form,
+  .review-form {
     width: 100%;
     padding: 15px;
   }
 
-  .car-parts-table td img {
+  .car-parts-table td img,
+  .reviews-table td img {
     width: 50px;
   }
 
   .car-parts-table th, 
-  .car-parts-table td {
+  .car-parts-table td,
+  .reviews-table th, 
+  .reviews-table td {
     font-size: 14px;
   }
 }
