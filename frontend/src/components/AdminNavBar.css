@@ -1,22 +1,23 @@
 /* NavBar.css */
 
-body {
-    margin: 0;
-    padding: 0;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333; /* Dark background */
+  padding: 10px 20px;
+  position: fixed; /* Fix the navbar to the top */
+  top: 0;
+  left: 0;
+  width: 100%; /* Make it span the full width */
+  z-index: 1000; /* Keep it above other content */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional: Add a shadow for better visual separation */
+}
 
-  }
-  
-  
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333;
-    padding: 10px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-  }
+/* Optional: Ensure content doesn't go under the navbar */
+body {
+  padding-top: 60px; /* Adjust this based on the height of your navbar */
+}
   
   .navbar-brand {
     color: #fff;
@@ -32,11 +33,6 @@ body {
     margin: 0;
     padding: 0;
     transition: max-height 0.3s ease-in-out;
-  }
-
-  .cartIcon{
-    cursor: pointer;
-    margin-top: 8px;
   }
   
   .navbar-links li {

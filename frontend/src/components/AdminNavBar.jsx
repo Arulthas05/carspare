@@ -30,16 +30,7 @@ function AdminNavBar({ showCartIcon, cart ,pathname}) {
     <nav className="navbar">
       <div className="navbar-brand">CarSpare</div>
       {/* Conditionally render the search bar only on /services route */}
-      {pathname === "/services" && (
-        <input
-          type="text"
-          className="search-bar"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
-      )}
-
+      
       <ul className={`navbar-links ${isOpen ? "open" : ""}`}>
        
         <li
