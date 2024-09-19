@@ -32,39 +32,31 @@ function App() {
 
 function AppContent({ cart, setCart }) {
   const location = useLocation();
-  //const { username } = useContext(AuthContext); // Now useContext is correctly defined
+  const { username, userId } = useContext(AuthContext); // Destructure from AuthContext
   const isLogin = location.pathname === "/login";
   const isRegister = location.pathname === "/register";
   const isDashboard = location.pathname === "/dashboard";
 
- // const { user } = useContext(AuthContext); // Get the logged-in user info
-
-  const{user,username,userId}=useContext(AuthContext)
-
-  // Check if the user is an admin
-  const isAdmin = user && user.email === "admin123@gmail.com";
+  // Check if the user is an admin (using username instead of user)
+  const isAdmin = username === "admin123@gmail.com";
 
   return (
     <>
       {/* Conditionally render NavBar */}
-      {!isLogin && !isRegister && !isDashboard && <NavBar  isAdmin={isAdmin} showCartIcon={true} cart={cart} pathname={location.pathname} username={username} />}
-      {isDashboard && <AdminNavBar  isAdmin={isAdmin} showCartIcon={true} cart={cart} pathname={location.pathname} username={username} />}
+      {!isLogin && !isRegister && !isDashboard && <NavBar isAdmin={isAdmin} showCartIcon={true} cart={cart} pathname={location.pathname} username={username} />}
+      {isDashboard && <AdminNavBar isAdmin={isAdmin} showCartIcon={true} cart={cart} pathname={location.pathname} username={username} />}
       
       <Routes>
         <Route
           path="/"
           element={
-           
-              <SlideShow cart={cart} setCart={setCart} username={username} userId={userId} />
-         
+            <SlideShow cart={cart} setCart={setCart} username={username} userId={userId} />
           }
         />
         <Route
           path="/services"
           element={
-           
-              <Home cart={cart} setCart={setCart} username={username} userId={userId} />
-       
+            <Home cart={cart} setCart={setCart} username={username} userId={userId} />
           }
         />
         <Route
@@ -74,35 +66,13 @@ function AppContent({ cart, setCart }) {
               <Cart cart={cart} setCart={setCart} />
             </ProtectedRoute>
           }
-          
         />
-        <Route
-          path="/manage"
-          element={
-          
-              <Manage />
-      
-          }
-        />
-         <Route
-          path="/blogs"
-          element={
-          
-              <Blog />
-      
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-           
-              <Dashboard />
-         
-          }
-        />
+        <Route path="/manage" element={<Manage />} />
+        <Route path="/blogs" element={<Blog />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/logout" element={<Logout/>} />
+        <Route path="/logout" element={<Logout />} />
       </Routes>
 
       {/* Conditionally render Footer */}
