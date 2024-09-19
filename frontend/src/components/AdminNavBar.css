@@ -61,6 +61,7 @@ body {
   transition: color 0.3s;
   cursor: pointer;
     margin-top: 8px;
+    padding-right: 20px;
 }
 
 .userIcon:hover {
