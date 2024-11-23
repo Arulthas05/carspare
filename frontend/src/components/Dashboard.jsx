@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Swal from "sweetalert2"; // Import SweetAlert
+import Swal from "sweetalert2";
 import "./Dashboard.css";
 
 function Dashboard() {
   const [carParts, setCarParts] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [blogs, setBlogs] = useState([]);
   const [formData, setFormData] = useState({
     id: "",
     name: "",
@@ -23,8 +24,15 @@ function Dashboard() {
     review_text: "",
     car_part_id: "",
   });
+  const [blogsData, setBlogsData] = useState({
+    id: "",
+    title: "",
+    content: "",
+    image_url: "",
+  });
   const [isEditing, setIsEditing] = useState(false);
   const [isReviewEditing, setIsReviewEditing] = useState(false);
+  const [isBlogsEditing, setIsBlogsEditing] = useState(false);
   const [selectedSection, setSelectedSection] = useState("carParts");
 
   // Fetch car parts and reviews data from the backend
@@ -36,6 +44,9 @@ function Dashboard() {
 
         const reviewsResponse = await axios.get("http://localhost:3000/api/reviews");
         setReviews(reviewsResponse.data);
+
+        const blogsResponse = await axios.get("http://localhost:3000/api/blogs");
+        setBlogs(blogsResponse.data);
       } catch (error) {
         console.error("There was an error fetching the data!", error);
       }
@@ -58,6 +69,15 @@ function Dashboard() {
     const { name, value } = e.target;
     setReviewData({
       ...reviewData,
+      [name]: value,
+    });
+  };
+
+  // Handle Blogs form data change
+  const handleBlogsChange = (e) => {
+    const { name, value } = e.target;
+    setBlogsData({
+      ...blogsData,
       [name]: value,
     });
   };
@@ -127,6 +147,36 @@ function Dashboard() {
     fetchData();
   };
 
+  // Handle add/edit review form submission
+  const handleBlogsSubmit = async (e) => {
+    e.preventDefault();
+    if (isBlogsEditing) {
+      try {
+        await axios.put(`http://localhost:3000/api/blogs/${blogsData.id}`, blogsData);
+        Swal.fire("Updated!", "The review has been updated.", "success");
+        window.location.reload();
+      } catch (error) {
+        console.error("There was an error updating the review!", error);
+      }
+    } else {
+      try {
+        await axios.post("http://localhost:3000/api/blogs", blogsData);
+        Swal.fire("Added!", "The review has been added.", "success");
+        window.location.reload();
+      } catch (error) {
+        console.error("There was an error adding the review!", error);
+      }
+    }
+    setBlogsData({
+      id: "",
+      title: "",
+      content: "",
+      image_url: "",
+    });
+    setIsBlogsEditing(false);
+    fetchData();
+  };
+
   // Handle edit click for car parts
   const handleEditClick = (part) => {
     setFormData(part);
@@ -162,7 +212,24 @@ function Dashboard() {
       console.error("There was an error deleting the review!", error);
     }
   };
+  
+   // Handle edit click for reviews
+   const handleBlogsEditClick = (review) => {
+    setBlogsData(review);
+    setIsBlogsEditing(true);
+  };
 
+  // Handle delete for reviews
+  const handleBlogsDeleteClick = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/blogs/${id}`);
+      Swal.fire("Deleted!", "The review has been deleted.", "success");
+      window.location.reload();
+      fetchData();
+    } catch (error) {
+      console.error("There was an error deleting the review!", error);
+    }
+  };
   return (
     <div className="dashboard">
       <aside className="sidebar">
@@ -173,6 +240,10 @@ function Dashboard() {
             </li>
             <li onClick={() => setSelectedSection("reviews")}>
               Review Management
+            </li>
+
+            <li onClick={() => setSelectedSection("blogs")}>
+              Blog Management
             </li>
           </ul>
         </nav>
@@ -371,6 +442,83 @@ function Dashboard() {
             </form>
           </>
         )}
+
+        {selectedSection === "blogs" && (
+          <>
+            <h2>Blogs Management</h2>
+            {/* Blogs Table */}
+            <table className="reviews-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>title</th>
+                  <th>content</th>
+                  <th>Image</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {blogs.map((blog) => (
+                  <tr key={blog.id}>
+                    <td>{blog.id}</td>
+                    <td>{blog.title}</td>
+                    <td>{blog.content}</td>
+                    {/* <td>{blog.image_url}</td> */}
+                    <td>
+                      <img src={blog.image_url} width={100} alt={blog.title} />
+                    </td>
+                    {/* <td>{review.car_part_id}</td> */}
+                    <td>
+                      <button
+                        className="edit-btn"
+                        onClick={() => handleBlogsEditClick(blog)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="delete-btn"
+                        onClick={() => handleBlogsDeleteClick(blog.id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {/* Review Add/Edit Form */}
+            <form className="review-form" onSubmit={handleBlogsSubmit}>
+              <input
+                type="text"
+                name="title"
+                placeholder="Title"
+                value={blogsData.title}
+                onChange={handleBlogsChange}
+                required
+              />
+              <input
+                type="text"
+                name="image_url"
+                placeholder="image_url"
+                value={blogsData.image_url}
+                onChange={handleBlogsChange}
+                required
+              />
+              <textarea
+                name="content"
+                placeholder="blog content"
+                value={blogsData.content}
+                onChange={handleBlogsChange}
+                required
+              />
+              <button type="submit">
+                {isBlogsEditing ? "Update Blogs" : "Add Blogs"}
+              </button>
+            </form>
+          </>
+        )}
+
       </div>
     </div>
   );

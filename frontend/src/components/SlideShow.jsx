@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Fade } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 import './Slide.css';
-import Footer from './Footer';
-import NavBar from './NavBar';
 import axios from 'axios';
 
 const fadeImages = [
@@ -95,42 +93,44 @@ function SlideShow({ cart, setCart, username, userId }) {
         </Fade>
       </div>
 
-      <div className="product-list">
-        <div className='text'>Latest Products</div>
-        {carParts.map((part, index) => (
-          <div key={index} className="product-card">
-            <img src={part.image_url} alt={part.name} className="product-image" />
-            <div className="product-info">
-              <h2>{part.name}</h2>
-              <p>Brand: {part.brand}</p>
-              <p>Price: ${part.price}</p>
-              <button
-                className="add-to-cart-btn"
-                onClick={() => handleAddToCart(part)}
-              >
-                Add to Cart
-              </button>
-              <button
-                className="review-btn"
-                onClick={() => handleReviewClick(part)}
-              >
-                Leave a Review
-              </button>
-            </div>
+      <div className="product">
+          <div className='text'>Latest Products</div>
+          <div className="product-list">
+            {carParts.map((part, index) => (
+              <div key={index} className="product-card">
+                <img src={part.image_url} alt={part.name} className="product-image" />
+                <div className="product-info">
+                  <h2>{part.name}</h2>
+                  <p>Brand: {part.brand}</p>
+                  <p>Price: ${part.price}</p>
+                  <button
+                    className="add-to-cart-btn"
+                    onClick={() => handleAddToCart(part)}
+                  >
+                    Add to Cart
+                  </button>
+                  <button
+                    className="review-btn"
+                    onClick={() => handleReviewClick(part)}
+                  >
+                    Leave a Review
+                  </button>
+                </div>
+              </div>
+            ))}
+            {showReviewForm && selectedPart && (
+              <ReviewForm
+                productId={selectedPart.id}
+                username={username}
+                userId={userId}
+                onReviewSubmit={handleReviewSubmit}
+                onClose={() => setShowReviewForm(false)}
+              />
+            )}
           </div>
-        ))}
-        {showReviewForm && selectedPart && (
-          <ReviewForm
-            productId={selectedPart.id}
-            username={username}
-            userId={userId}
-            onReviewSubmit={handleReviewSubmit}
-            onClose={() => setShowReviewForm(false)}
-          />
-        )}
       </div>
 
-      <div className="reviews-section">
+      <div className="review-section">
         <div className='text'>Customer Reviews</div>
         {reviews.length > 0 ? (
           reviews.map((review, index) => (
@@ -148,7 +148,7 @@ function SlideShow({ cart, setCart, username, userId }) {
         )}
       </div>
 
-      
+
     </>
   );
 }

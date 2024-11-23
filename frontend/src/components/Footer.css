@@ -1,7 +1,14 @@
 /* Footer Styling */
+
+:root {
+  --footer-bg: #8c4e4e;
+  --footer-accent: #ff6b6b;
+  --footer-text: #fff;
+}
+
 .footer {
-    background-color: #333;
-    color: #fff;
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
     padding: 20px 0;
     text-align: center;
     position: relative;
@@ -11,7 +18,7 @@
   .footer-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
     max-width: 1200px;
     margin: 0 auto;
   }
@@ -25,13 +32,13 @@
   .footer-section h2 {
     font-size: 18px;
     margin-bottom: 20px;
-    color: #ff6b6b;
+    color: var(--footer-accent)
   }
   
   .footer-section p {
     font-size: 14px;
     line-height: 1.6;
-    color: #ddd;
+    color: var(--footer-text);
   }
   
   .footer-section ul {
@@ -44,28 +51,28 @@
   }
   
   .footer-section ul li a {
-    color: #ff6b6b;
+    color: var(--footer-text);
     text-decoration: none;
     transition: color 0.3s;
   }
   
   .footer-section ul li a:hover {
-    color: #fff;
+    color: var(--footer-accent);
   }
   
   .footer-section .social-links a {
     margin: 0 10px;
-    color: #ff6b6b;
+    color: var(--footer-text);
     font-size: 20px;
     transition: color 0.3s;
   }
   
   .footer-section .social-links a:hover {
-    color: #fff;
+    color: var(--footer-accent)
   }
   
   .footer-bottom {
-    background-color: #222;
+    background-color: var(--footer-bg);
     padding: 20px 0;
     margin-top: 30px;
   }

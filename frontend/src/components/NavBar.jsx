@@ -53,10 +53,10 @@ function NavBar({ isAdmin, showCartIcon, cart, pathname, username }) {
         {/* <li>
           <Link to={"/manage"}>Manage</Link>
         </li> */}
-  <li>
+        <li>
             <Link to={"/blogs"}>Blogs</Link>
           </li>
-        {(pathname === "/services"||pathname === "/")&& (
+        {/* {(pathname === "/services"||pathname === "/")&& ( */}
           <li>
             <Link to={"/cart"}>
               <div className="cart-icon-wrapper">
@@ -67,7 +67,7 @@ function NavBar({ isAdmin, showCartIcon, cart, pathname, username }) {
               </div>
             </Link>
           </li>
-        )}
+        {/* )} */}
         {/* User Icon with Dropdown */}
         <li
           className="user-icon-wrapper"
@@ -94,6 +94,7 @@ function NavBar({ isAdmin, showCartIcon, cart, pathname, username }) {
           )}
         </li>
       </ul>
+      
       <div className="hamburger-menu" onClick={toggleMenu}>
         <span></span>
         <span></span>

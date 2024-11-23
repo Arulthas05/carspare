@@ -271,4 +271,69 @@ router.delete("/review/:id", (req, res) => {
   });
 });
 
+// Add a new blog
+router.post("/blogs", (req, res) => {
+  const { title, content, image_url } = req.body;
+  const query =
+    "INSERT INTO blogs (title, content, image_url) VALUES (?, ?, ?)";
+
+  db.query(query, [title, content, image_url], (err, result) => {
+    if (err) throw err;
+    res.json({
+      message: "Blog added successfully",
+      blogId: result.insertId,
+    });
+  });
+});
+
+// Get all blogs
+router.get("/blogs", (req, res) => {
+  const query = "SELECT * FROM blogs";
+  db.query(query, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+// Get a specific blog by ID
+router.get("/blogs/:id", (req, res) => {
+  const { id } = req.params;
+  const query = "SELECT * FROM blogs WHERE id = ?";
+
+  db.query(query, [id], (err, results) => {
+    if (err) throw err;
+    if (results.length === 0) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+    res.json(results[0]);
+  });
+});
+
+// Update a blog
+router.put("/blogs/:id", (req, res) => {
+  const { id } = req.params;
+  const { title, content, image_url } = req.body;
+  const query =
+    "UPDATE blogs SET title = ?, content = ?, image_url = ? WHERE id = ?";
+
+  db.query(query, [title, content, image_url, id], (err, result) => {
+    if (err) throw err;
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+    res.json({ message: "Blog updated successfully" });
+  });
+});
+
+// Delete a blog
+router.delete("/blogs/:id", (req, res) => {
+  const { id } = req.params;
+  const query = "DELETE FROM blogs WHERE id = ?";
+
+  db.query(query, [id], (err) => {
+    if (err) throw err;
+    res.json({ message: "Blog deleted successfully" });
+  });
+});
+
 module.exports = router;

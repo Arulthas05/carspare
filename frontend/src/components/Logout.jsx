@@ -8,7 +8,7 @@ function Logout() {
 
   useEffect(() => {
     logout(); // Call logout function from context
-    navigate("/login"); // Redirect to login page after logout
+    navigate("/"); // Redirect to login page after logout
   }, [logout, navigate]);
 
   return (

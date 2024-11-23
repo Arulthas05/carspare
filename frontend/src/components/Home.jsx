@@ -56,38 +56,74 @@ function Home({ cart, setCart,username,userId }) {
   };
 
   return (
-    <div className="home-container">
-      <div className="product-list">
-        {carParts.map((part, index) => (
-          <div key={index} className="car-part-card">
-            <img src={part.image_url} alt={part.name} className="car-part-image" />
-            <h3 className="car-part-name">{part.name}</h3>
-            <p className="car-part-brand">Brand: {part.brand}</p>
-            <p className="car-part-model">Model: {part.model}</p>
-            <p className="car-part-year">Year: {part.year}</p>
-            <p className="car-part-price">Price: ${part.price}</p>
-            <button className="add-to-cart-btn" onClick={() => handleAddToCart(part)}>
-              Add to Cart
-            </button>
-            <button className="review-btn" onClick={() => handleReviewClick(part)}>
-              Leave a Review
-            </button>
+    <div className="product">
+          <div className='text'>Our Products</div>
+          <div className="product-list">
+            {carParts.map((part, index) => (
+              <div key={index} className="product-card">
+                <img src={part.image_url} alt={part.name} className="product-image" />
+                <div className="product-info">
+                  <h2>{part.name}</h2>
+                  <p>Brand: {part.brand}</p>
+                  <p>Price: ${part.price}</p>
+                  <button
+                    className="add-to-cart-btn"
+                    onClick={() => handleAddToCart(part)}
+                  >
+                    Add to Cart
+                  </button>
+                  <button
+                    className="review-btn"
+                    onClick={() => handleReviewClick(part)}
+                  >
+                    Leave a Review
+                  </button>
+                </div>
+              </div>
+            ))}
+            {showReviewForm && selectedPart && (
+              <ReviewForm
+                productId={selectedPart.id}
+                username={username}
+                userId={userId}
+                onReviewSubmit={handleReviewSubmit}
+                onClose={() => setShowReviewForm(false)}
+              />
+            )}
           </div>
-        ))}
       </div>
+    // <div className="home-container">
+    //   <div className="product-list">
+    //     {carParts.map((part, index) => (
+    //       <div key={index} className="car-part-card">
+    //         <img src={part.image_url} alt={part.name} className="car-part-image" />
+    //         <h3 className="car-part-name">{part.name}</h3>
+    //         <p className="car-part-brand">Brand: {part.brand}</p>
+    //         <p className="car-part-model">Model: {part.model}</p>
+    //         <p className="car-part-year">Year: {part.year}</p>
+    //         <p className="car-part-price">Price: ${part.price}</p>
+    //         <button className="add-to-cart-btn" onClick={() => handleAddToCart(part)}>
+    //           Add to Cart
+    //         </button>
+    //         <button className="review-btn" onClick={() => handleReviewClick(part)}>
+    //           Leave a Review
+    //         </button>
+    //       </div>
+    //     ))}
+    //   </div>
 
       
 
-      {showReviewForm && selectedPart && (
-        <ReviewForm
-          productId={selectedPart.id}
-          username={username} // Replace with actual username from your context
-          userId={userId} // Replace with actual user ID from your context
-          onReviewSubmit={handleReviewSubmit}
-          onClose={() => setShowReviewForm(false)}
-        />
-      )}
-    </div>
+    //   {showReviewForm && selectedPart && (
+    //     <ReviewForm
+    //       productId={selectedPart.id}
+    //       username={username} // Replace with actual username from your context
+    //       userId={userId} // Replace with actual user ID from your context
+    //       onReviewSubmit={handleReviewSubmit}
+    //       onClose={() => setShowReviewForm(false)}
+    //     />
+    //   )}
+    // </div>
   );
 }
 

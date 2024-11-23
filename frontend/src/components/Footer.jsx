@@ -22,7 +22,7 @@ function Footer() {
             <li><a href="#contact">Contact</a></li>
           </ul>
         </div>
-        <div className="footer-section social">
+        {/* <div className="footer-section social">
           <h2>Follow Us</h2>
           <div className="social-links">
             <a href="https://facebook.com"><i className="fab fa-facebook-f"></i></a>
@@ -30,10 +30,10 @@ function Footer() {
             <a href="https://instagram.com"><i className="fab fa-instagram"></i></a>
             <a href="https://linkedin.com"><i className="fab fa-linkedin-in"></i></a>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="footer-bottom">
-        <p>&copy; 2024 Your Company. All rights reserved.</p>
+        <p>&copy; 2024 CarSpare. All rights reserved.</p>
       </div>
     </footer>
   );
